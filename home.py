@@ -4,14 +4,16 @@ import numpy as np
 # import plotly.express as px
 import time
 from about import about_page
+import os
+from dotenv import load_dotenv
+import requests
+from io import BytesIO
 # from compare import compare_page
 # from home import home_page()
 
-
+load_dotenv()
 def home_page():
     st.title("Hurricane Scout")
-    
-
     st.caption("Built with Streamlit | By: Aiman, CS + French @ The University of Tulsa '27")
     uploaded_files = st.file_uploader("Drop an external data file here (csv, xlsx)",accept_multiple_files=True)
 
@@ -20,13 +22,21 @@ def home_page():
         r"C:\Users\user\OneDrive\Documents\Side Projects\Python\Streamlit\cumulative-transfer-app\naia njcaa\NAIA.csv",
         r"C:\Users\user\OneDrive\Documents\Side Projects\Python\Streamlit\cumulative-transfer-app\naia njcaa\NJCAA.csv"
     ]
-
+    ncaa_d1_file_id = os.getenv("NCAA_D1_F24_ID")
+    # ncaa_d1_file_id = "1EbyMuNA_xJvtpHKYEOBTFhHTmw5nE5b5"
+    ncaa_d1_url = f"https://drive.google.com/uc?id={ncaa_d1_file_id}"
+    # Download the file
+    response = requests.get(ncaa_d1_url)
+    response.raise_for_status()  # Ensure the request was successful
+    # Download the XLSX file
+    # ncaa_d1_df = pd.read_excel(BytesIO(response.content), engine="openpyxl")
+    ncaa_d1_df = pd.read_excel(ncaa_d1_url)
+    st.write(ncaa_d1_df)
     # Process uploaded files if any
     if uploaded_files:
         files_to_process = uploaded_files
     else:
         files_to_process = local_files  # Fallback to local files
-
     for file in files_to_process:
         # Check if it's an uploaded file or a local file
         if isinstance(file, str):  # Local file (file path)
@@ -73,3 +83,4 @@ def home_page():
             # Display the dataframe
             # st.dataframe(data, use_container_width=True)
             st.dataframe(filtered_data, use_container_width=True)
+        
