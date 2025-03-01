@@ -1,4 +1,6 @@
 import streamlit as st
+import gdown
+
 # page_bg_img='''
 # <style>
 # [data-testid="stAppViewContainer"] {
@@ -9,7 +11,21 @@ import streamlit as st
 # </style>
 # '''
 # st.markdown (page_bg_img, unsafe_allow_html=True)
+
+
+
 def about_page():
+    file_id = "1Qag0gA0G5pbAZqUQonBeXg6myC2_hDMT"
+    url = f"https://drive.google.com/uc?id={file_id}"
+
+    # Download the XLSX file
+    output = "data.xlsx"
+    gdown.download(url, output, quiet=False)
+
+    df = pd.read_excel(output, engine="openpyxl")  # Use "openpyxl" for Excel files
+
+# Display the dataframe in Streamlit
+st.write(df)
     st.title("About Hurricane Scout")
     st.write("The main purpose of this app is to assist the TU Men Soccer coaches to scout future potential players. This app stores all the data for NCAA D1 from Wyscout, and NCAA D2, NAIA, NJCAA stats as scraped from their respective websites.")
     
