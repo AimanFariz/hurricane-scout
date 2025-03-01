@@ -24,15 +24,30 @@ def home_page():
     ]
     # ncaa_d1_file_id = os.getenv("NCAA_D1_F24_ID")
     ncaa_d1_file_id = st.secrets["NCAA_D1_F24_ID"]
+    naia_file_id = st.secrets["NAIA_F24_ID"]
+    njcaa_file_id = st.secrets["NJCAA_F24_ID"]
     # ncaa_d1_file_id = "1EbyMuNA_xJvtpHKYEOBTFhHTmw5nE5b5"
-    ncaa_d1_url = f"https://drive.google.com/uc?id={ncaa_d1_file_id}"
+    base_url = "https://drive.google.com/uc?id="
+    ncaa_d1_url = f"{base_url}{ncaa_d1_file_id}"
+    naia_url = f"{base_url}{naia_file_id}"
+    njcaa_url = f"{base_url}{njcaa_file_id}"
     # Download the file
     response = requests.get(ncaa_d1_url)
     response.raise_for_status()  # Ensure the request was successful
     # Download the XLSX file
     # ncaa_d1_df = pd.read_excel(BytesIO(response.content), engine="openpyxl")
     ncaa_d1_df = pd.read_excel(ncaa_d1_url)
+    naia_df = pd.read_excel(ncaa_d1_url)
+    njcaa_df = pd.read_excel(ncaa_d1_url)
+    
+    st.header("NCAA D1 Fall 24 Dataframe")
     st.write(ncaa_d1_df)
+    
+    st.header("NAIA Fall 24 Dataframe")
+    st.write(naia_df)
+    
+    st.header("NJCAA Fall 24 Dataframe")
+    st.write(njcaa_df)
     # Process uploaded files if any
     if uploaded_files:
         files_to_process = uploaded_files
