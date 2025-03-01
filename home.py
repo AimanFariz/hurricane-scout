@@ -22,7 +22,8 @@ def home_page():
         r"C:\Users\user\OneDrive\Documents\Side Projects\Python\Streamlit\cumulative-transfer-app\naia njcaa\NAIA.csv",
         r"C:\Users\user\OneDrive\Documents\Side Projects\Python\Streamlit\cumulative-transfer-app\naia njcaa\NJCAA.csv"
     ]
-    ncaa_d1_file_id = os.getenv("NCAA_D1_F24_ID")
+    # ncaa_d1_file_id = os.getenv("NCAA_D1_F24_ID")
+    ncaa_d1_file_id = st.secrets["NCAA_D1_F24_ID"]
     # ncaa_d1_file_id = "1EbyMuNA_xJvtpHKYEOBTFhHTmw5nE5b5"
     ncaa_d1_url = f"https://drive.google.com/uc?id={ncaa_d1_file_id}"
     # Download the file
