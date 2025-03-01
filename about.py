@@ -1,5 +1,6 @@
 import streamlit as st
-import gdown
+import requests
+from io import BytesIO
 import pandas as pd
 # page_bg_img='''
 # <style>
@@ -17,13 +18,11 @@ import pandas as pd
 def about_page():
     file_id = "1Qag0gA0G5pbAZqUQonBeXg6myC2_hDMT"
     url = f"https://drive.google.com/uc?id={file_id}"
-
+    # Download the file
+    response = requests.get(url)
+    response.raise_for_status()  # Ensure the request was successful
     # Download the XLSX file
-    output = "data.xlsx"
-    gdown.download(url, output, quiet=False)
-
-    df = pd.read_excel(output, engine="openpyxl")  # Use "openpyxl" for Excel files
-
+    df = pd.read_excel(BytesIO(response.content), engine="openpyxl")
 # Display the dataframe in Streamlit
     st.write(df)
     st.title("About Hurricane Scout")
