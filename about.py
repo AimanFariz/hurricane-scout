@@ -25,7 +25,7 @@ def about_page():
     df = pd.read_excel(output, engine="openpyxl")  # Use "openpyxl" for Excel files
 
 # Display the dataframe in Streamlit
-st.write(df)
+    st.write(df)
     st.title("About Hurricane Scout")
     st.write("The main purpose of this app is to assist the TU Men Soccer coaches to scout future potential players. This app stores all the data for NCAA D1 from Wyscout, and NCAA D2, NAIA, NJCAA stats as scraped from their respective websites.")
     
